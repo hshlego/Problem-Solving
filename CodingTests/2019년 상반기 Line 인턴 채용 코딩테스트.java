@@ -57,6 +57,7 @@ public class Main {
             conyPosition += time;
             updateNextBrown(q.size(), time);
         }
+
         System.out.println(-1);
     }
 
@@ -64,25 +65,15 @@ public class Main {
         for(int i = 0; i < size; i++) {
             int index = q.poll();
 
-            int nextIndex;
+            int[] nextIndex = {index-1, index+1, index*2};
             int timeRemainder = time%2;
 
-            nextIndex = index - 1;
-            if(inRange(nextIndex) && !visited[nextIndex][timeRemainder]) {
-                visited[nextIndex][timeRemainder] = true;
-                q.add(nextIndex);
-            }
-
-            nextIndex = index + 1;
-            if(inRange(nextIndex) && !visited[nextIndex][timeRemainder]) {
-                visited[nextIndex][timeRemainder] = true;
-                q.add(nextIndex);
-            }
-
-            nextIndex = index * 2;
-            if(inRange(nextIndex) && !visited[nextIndex][timeRemainder]) {
-                visited[nextIndex][timeRemainder] = true;
-                q.add(nextIndex);
+            for(int j = 0; j < 3; j++) {
+                int now = nextIndex[j];
+                if(inRange(now) && !visited[now][timeRemainder]) {
+                    visited[now][timeRemainder] = true;
+                    q.add(now);
+                }
             }
         }
     }
@@ -94,15 +85,4 @@ public class Main {
             return false;
         }
     }
-
-    static class Node {
-        int index;
-        int count;
-
-        public Node(int index, int count) {
-            this.index = index;
-            this.count = count;
-        }
-    }
-
 }
